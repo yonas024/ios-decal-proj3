@@ -16,6 +16,7 @@ class PhotosCollectionViewController: UICollectionViewController {
 
         let api = InstagramAPI()
         api.loadPhotos(didLoadPhotos)
+        
         // FILL ME IN
     }
 
@@ -23,10 +24,22 @@ class PhotosCollectionViewController: UICollectionViewController {
      * IMPLEMENT ANY COLLECTION VIEW DELEGATE METHODS YOU FIND NECESSARY
      * Examples include cellForItemAtIndexPath, numberOfSections, etc.
      */
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell: UICollectionViewCell = UICollectionViewCell()
+        return cell
+    }
     
     /* Creates a session from a photo's url to download data to instantiate a UIImage. 
        It then sets this as the imageView's image. */
     func loadImageForCell(photo: Photo, imageView: UIImageView) {
+        let link = NSURL(string: photo.url)!
+        let data = NSData(contentsOfURL: link)!
+        let image = UIImage(data: data)
+        
         
     }
     
