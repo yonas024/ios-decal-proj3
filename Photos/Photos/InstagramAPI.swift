@@ -11,6 +11,7 @@ import Foundation
 class InstagramAPI {
     /* Connects with the Instagram API and pulls resources from the server. */
     func loadPhotos(completion: (([Photo]) -> Void)!) {
+        //print("loading photos in Instagram API")
         /* 
          * 1. Get the endpoint URL to the popular photos 
          *    HINT: Look in Utils
@@ -29,8 +30,8 @@ class InstagramAPI {
             (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if error == nil {
                 //FIX ME
-                var dictionaries: [NSDictionary]
-                var photos: [Photo]!
+                var dictionaries: [NSDictionary] = []
+                var photos: [Photo]! = []
                 do {
                     let feedDictionary = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
                     

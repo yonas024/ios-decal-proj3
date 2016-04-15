@@ -19,14 +19,36 @@ class NewViewController: UIViewController {
     
     @IBOutlet weak var likes: UILabel!
     
-    @IBOutlet weak var heart: UIButton!
-    
     var image2 = UIImage()
+    
+    var current: Photo?
+    
+    var liked = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       self.image.image = self.image2
+        
+        image.image = image2
+        username.text = current!.username
+        date.text = current!.date
+        likes.text = "\(current!.likes)"
+        liked = false
+        
     }
     
+    
+    @IBAction func haction(sender: UIButton) {
+        if liked == false{
+            var myimage = UIImage(named: "red-heart.gif")
+            myimage = myimage?.imageWithAlignmentRectInsets(UIEdgeInsetsMake(10, 10, 10, 10))
+            sender.setImage(myimage, forState: .Normal)
+            liked = true
+        } else {
+            var myimage = UIImage(named: "white-heart.gif")
+            myimage = myimage?.imageWithAlignmentRectInsets(UIEdgeInsetsMake(10, 10, 10, 10))
+            sender.setImage(myimage, forState: .Normal)
+            liked = false
+        }
+    }
     
 }

@@ -9,32 +9,40 @@
 import UIKit
 
 class PhotosCollectionViewController: UICollectionViewController {
-    var photos: [Photo]!
+    var photos: [Photo]! = []
     
     override func viewDidLoad() {
+        //print("view did load")
         super.viewDidLoad()
 
         let api = InstagramAPI()
         api.loadPhotos(didLoadPhotos)
-        collectionView?.reloadData()
-        // FILL ME IN
+
     }
 
     /* 
      * IMPLEMENT ANY COLLECTION VIEW DELEGATE METHODS YOU FIND NECESSARY
      * Examples include cellForItemAtIndexPath, numberOfSections, etc.
      */
+    
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        if (photos != nil) {
+            return photos.count
+        }
+        return 0
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ViewCell
         
         let link = NSURL(string: self.photos[indexPath.row].url)!
+        
+        //print(self.photos[indexPath.row].url);
+        
         let data = NSData(contentsOfURL: link)!
         let image = UIImage(data: data)
         let View=UIView()
+        
         View.backgroundColor = UIColor(patternImage:image!)
         cell.backgroundView=View
         loadImageForCell(self.photos[indexPath.row], imageView: cell.image)
@@ -56,9 +64,11 @@ class PhotosCollectionViewController: UICollectionViewController {
             let image = UIImage(data: data)
 
             s.image2 = image!
-            s.username.text = photos[indexpath.row].username
-            s.likes.text = "\(photos[indexpath.row].likes)"
-            s.date.text = photos[indexpath.row].date
+            
+            //print(s.username)
+            //print(photos[indexpath.row].username)
+            
+            s.current = photos[indexpath.row]
         }
     }
     
@@ -75,6 +85,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     /* Completion handler for API call. DO NOT CHANGE */
     func didLoadPhotos(photos: [Photo]) {
         self.photos = photos
+        //print("didLoadPhotos")
+        //print(photos)
+        //print(self.photos)
         self.collectionView!.reloadData()
     }
     
